@@ -1,11 +1,13 @@
 package io.explod.save4later.activity;
 
 import io.explod.android.app.activity.EasyActivity;
+import io.explod.save4later.R;
 import io.explod.save4later.data.entry.EntryManager;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.widget.Toast;
 
 public class SaveActivity extends EasyActivity {
 
@@ -15,19 +17,19 @@ public class SaveActivity extends EasyActivity {
 
 		final Intent intent = this.getIntent();
 
-		if (intent == null) {
-			this.gotoMain();
-		} else {
+		if (intent != null) {
 			final Uri uri = intent.getData();
 			if (uri != null) {
 				this.saveUri(uri);
-				this.gotoMain();
 			}
 		}
+		this.finish();
 	}
 
 	private void saveUri(Uri uri) {
 		EntryManager.addEntry(this, uri);
+		final Toast toast = Toast.makeText(this, R.string.saved_uri, Toast.LENGTH_SHORT);
+		toast.show();
 	}
 
 	@Override

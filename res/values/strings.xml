@@ -2,7 +2,10 @@
 <resources>
 
     <string name="app_name">Save4Later</string>
-    
+
+    <!-- SaveActivity -->
+    <string name="saved_uri">Saved!</string>
+
     <!-- view_entrylist -->
     <string name="entrylist_ic_delete">Delete</string>
 
