@@ -42,10 +42,4 @@ public class SaveActivity extends EasyActivity {
 		// n/a
 	}
 
-	private void gotoMain() {
-		final Intent intent = new Intent(this, MainActivity.class);
-		this.startActivity(intent);
-		this.finish();
-	}
-
 }
