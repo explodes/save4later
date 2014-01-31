@@ -9,16 +9,24 @@
         android:layout_height="@dimen/entrylist_height"
         android:layout_alignParentLeft="true"
         android:contentDescription="@string/entrylist_ic_delete"
+        android:padding="@dimen/entrylist_padding"
         android:scaleType="centerInside"
         android:src="@drawable/ic_delete" />
 
     <TextView
-        android:id="@+id/text_uri"
+        android:id="@+id/label_uri"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/margin_slim"
         android:layout_toRightOf="@+id/button_delete"
         android:textSize="@dimen/text_normal" />
+
+    <ImageView
+        android:id="@+id/image_preview"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/entrylist_ic_preview"
+        android:padding="@dimen/entrylist_padding" />
 
 </RelativeLayout>

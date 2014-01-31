@@ -1,43 +1,44 @@
 package io.explod.save4later.adapter;
 
 import io.explod.android.app.view.adapter.NamedListExpandableListAdapter;
-import io.explod.android.collections.NamedListList;
 import io.explod.android.collections.NamedList;
-import io.explod.save4later.adapter.EntryListView.EntryListViewListener;
+import io.explod.android.collections.NamedListList;
 import io.explod.save4later.data.entry.Entry;
+import io.explod.save4later.view.EntryListItemView;
+import io.explod.save4later.view.EntryListItemView.EntryListItemViewListener;
+import io.explod.save4later.view.ExpandableGroupView;
 import android.content.Context;
-import android.widget.TextView;
 
-public class EntryExpandableListAdapter extends NamedListExpandableListAdapter<Entry, TextView, EntryListView> {
+public class EntryExpandableListAdapter extends NamedListExpandableListAdapter<Entry, ExpandableGroupView, EntryListItemView> {
 
-	private EntryListViewListener listener;
+	private EntryListItemViewListener listener;
 
-	public EntryExpandableListAdapter(Context context, NamedListList<Entry> entries, EntryListViewListener listener) {
+	public EntryExpandableListAdapter(Context context, NamedListList<Entry> entries, EntryListItemViewListener listener) {
 		super(context, entries);
 		this.listener = listener;
 	}
 
 	@Override
-	public TextView createGroupView(Context context) {
-		final TextView text = new TextView(context);
-		return text;
+	public ExpandableGroupView createGroupView(Context context) {
+		final ExpandableGroupView view = new ExpandableGroupView(context);
+		return view;
 	}
 
 	@Override
-	public void updateGroupView(TextView view, NamedList<Entry> data, boolean isExpanded) {
+	public void updateGroupView(ExpandableGroupView view, NamedList<Entry> data, boolean isExpanded) {
 		final String name = data.getName();
 		view.setText(name);
 	}
 
 	@Override
-	public EntryListView createChildView(Context context) {
-		final EntryListView view = new EntryListView(context);
-		view.setEntryListViewListener(this.listener);
+	public EntryListItemView createChildView(Context context) {
+		final EntryListItemView view = new EntryListItemView(context);
+		view.setEntryListItemViewListener(this.listener);
 		return view;
 	}
 
 	@Override
-	public void updateChildView(EntryListView view, Entry item, boolean isLastChild) {
+	public void updateChildView(EntryListItemView view, Entry item, boolean isLastChild) {
 		view.setEntry(item);
 	}
 

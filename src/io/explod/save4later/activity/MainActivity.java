@@ -5,10 +5,10 @@ import io.explod.android.collections.NamedList;
 import io.explod.android.collections.NamedListList;
 import io.explod.save4later.R;
 import io.explod.save4later.adapter.EntryExpandableListAdapter;
-import io.explod.save4later.adapter.EntryListView;
-import io.explod.save4later.adapter.EntryListView.EntryListViewListener;
 import io.explod.save4later.data.entry.Entry;
 import io.explod.save4later.data.entry.EntryManager;
+import io.explod.save4later.view.EntryListItemView;
+import io.explod.save4later.view.EntryListItemView.EntryListItemViewListener;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -21,9 +21,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ExpandableListView;
+import android.widget.ExpandableListView.OnGroupClickListener;
 
-public class MainActivity extends EasyActivity implements EntryListViewListener {
+public class MainActivity extends EasyActivity implements EntryListItemViewListener {
 
 	private ExpandableListView list;
 	private NamedListList<Entry> data;
@@ -45,6 +47,18 @@ public class MainActivity extends EasyActivity implements EntryListViewListener 
 		this.data = this.createData();
 		this.adapter = new EntryExpandableListAdapter(this, this.data, this);
 		this.list.setAdapter(this.adapter);
+		this.list.setOnGroupClickListener(new OnGroupClickListener() {
+			@Override
+			public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+				// This way the expander cannot be collapsed
+				return parent.isGroupExpanded(groupPosition);
+			}
+		});
+		// expand all groups.
+		final int N = this.adapter.getGroupCount();
+		for (int i = 0; i < N; i++) {
+			list.expandGroup(i);
+		}
 	}
 
 	private NamedListList<Entry> createData() {
@@ -99,21 +113,32 @@ public class MainActivity extends EasyActivity implements EntryListViewListener 
 	}
 
 	@Override
-	public void clickDelete(EntryListView sender, Entry entry) {
-		EntryManager.removeEntry(this, entry);
-		boolean updated = this.data.removeAny(entry);
-		updated |= this.data.removeEmptyLists();
-		if (updated) {
-			this.adapter.notifyDataSetChanged();
+	public void clickDelete(EntryListItemView sender) {
+		final Entry entry = sender.getEntry();
+		if (entry != null) {
+			EntryManager.removeEntry(this, entry);
+			boolean updated = this.data.removeAny(entry);
+			updated |= this.data.removeEmptyLists();
+			if (updated) {
+				this.adapter.notifyDataSetChanged();
+			}
 		}
 	}
 
 	@Override
-	public void click(EntryListView sender, Entry entry) {
-		final Intent intent = new Intent(Intent.ACTION_VIEW);
-		final Uri uri = entry.getUri();
-		intent.setData(uri);
-		this.startActivity(intent);
+	public void clickPreview(EntryListItemView sender) {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void clickEntry(EntryListItemView sender) {
+		final Entry entry = sender.getEntry();
+		if (entry != null) {
+			final Intent intent = new Intent(Intent.ACTION_VIEW);
+			final Uri uri = entry.getUri();
+			intent.setData(uri);
+			this.startActivity(intent);
+		}
 	}
 
 }

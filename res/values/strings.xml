@@ -8,5 +8,6 @@
 
     <!-- view_entrylist -->
     <string name="entrylist_ic_delete">Delete</string>
-
+    <string name="entrylist_ic_preview">Preview</string>
+    
 </resources>

@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!--
         Base application theme, dependent on API level. This theme is replaced
@@ -23,6 +23,11 @@
         <item name="android:background">@android:color/transparent</item>
         <item name="android:focusable">true</item>
         <item name="android:clickable">true</item>
+    </style>
+
+    <style name="ExpandableGroup" parent="@android:style/Widget.TextView">
+        <item name="android:height">@dimen/expandablegroup_height</item>
+        <item name="android:textSize">@dimen/expandablegroup_textsize</item>
     </style>
 
 </resources>
